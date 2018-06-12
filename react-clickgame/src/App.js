@@ -8,6 +8,27 @@ import './App.css';
 
 class App extends Component {
 
+    // Setting the initial states of the App component
+    state = {
+      // this includes the cards.json array,
+      cards,
+      // an array to hold each clicked card
+      clickedArr: [],
+      score: 0,
+      topScore: 0
+    };
+
+    // handleClick increments this.state.score by 1 and sets the clicked value to `true`
+    handleClick = (Id) => {
+      // let cardId = Id.target
+      // let cardId = this.state.cards.id
+      // console.log(cardId);
+
+
+      this.setState({ score: this.state.score + 1 });
+      console.log("score: " + this.state.score);
+    };
+
     render() {
       return (
         <div className="App">
@@ -20,6 +41,7 @@ class App extends Component {
                 key={card.id}
                 name={card.name}
                 image={card.image}
+                handleClick={this.handleClick}
               />
             ))}
           </Container>
