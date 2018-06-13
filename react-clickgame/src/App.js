@@ -6,27 +6,64 @@ import cards from "./components/Card/cards.json";
 import Footer from "./components/Footer/Footer";
 import './App.css';
 
+let score = 0;
+let topScore = 0;
+
 class App extends Component {
 
     // Setting the initial states of the App component
     state = {
       // this includes the cards.json array,
       cards,
-      // an array to hold each clicked card
-      clickedArr: [],
-      score: 0,
-      topScore: 0
+      score,
+      topScore
     };
 
+    shuffleCards = cards => {
+      for (let i = cards.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+    }
+
+    resetCards (cards) {
+      cards.clicked = false;
+    }
+
     // handleClick increments this.state.score by 1 and sets the clicked value to `true`
-    handleClick = (Id) => {
-      // let cardId = Id.target
-      // let cardId = this.state.cards.id
-      // console.log(cardId);
+    handleClick = id => {
+      const cards = this.state.cards;
+       // Filter cards (this.state.cards) for a card with an id equal to the id being clicked
+      const clickedCard = cards.filter(card => card.id === id);
+      console.log(cards)
+      console.log(clickedCard[0].name)
+
+      // If you click the same card...
+      if (clickedCard[0].clicked === true) {
+
+        alert("This card has already been clicked!");
+
+        // reset the score to 0,
+        this.setState({ score })
+
+        // reset all clicked values to `false`
+        cards.forEach(this.resetCards)
+
+      // Otherwise...
+      } else {
+
+        // change clicked value to true for clicked card,
+        clickedCard[0].clicked = true;
+
+        // shuffle cards after every click,
+        this.shuffleCards(cards)
+
+        // update the score on every click
+        this.setState({ score: this.state.score + 1 });
+        console.log("score: " + this.state.score);
+      }
 
 
-      this.setState({ score: this.state.score + 1 });
-      console.log("score: " + this.state.score);
     };
 
     render() {
@@ -34,8 +71,7 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Container>
-            {/* {this.state.cards.map(card => ( */}
-            {cards.map(card => (
+            {this.state.cards.map(card => (
               <Card
                 id={card.id}
                 key={card.id}
