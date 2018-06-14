@@ -26,6 +26,7 @@ class App extends Component {
       }
     }
 
+    // Resets all cards to unclicked when run with a forEach to the cards array.
     resetCards (cards) {
       cards.clicked = false;
     }
@@ -41,28 +42,38 @@ class App extends Component {
       // If you click the same card...
       if (clickedCard[0].clicked === true) {
 
-        alert("This card has already been clicked!");
-
+        alert("This card has already been clicked!\nTry again!");
         // reset the score to 0,
+        score = 0;
         this.setState({ score })
-
         // reset all clicked values to `false`
         cards.forEach(this.resetCards)
 
-      // Otherwise...
+      // if you have clicked all 15 cards non-consecutively...
+      } else if (this.state.score === 15) {
+
+        alert("You win!");
+        // reset the score to 0,
+        score = 0;
+        this.setState({ score })
+        // reset all clicked values to `false`
+        cards.forEach(this.resetCards)
+
       } else {
 
         // change clicked value to true for clicked card,
         clickedCard[0].clicked = true;
-
         // shuffle cards after every click,
         this.shuffleCards(cards)
-
         // update the score on every click
-        this.setState({ score: this.state.score + 1 });
-        console.log("score: " + this.state.score);
-      }
+        score ++;
 
+        if (score > topScore) {
+          topScore = score;
+          this.setState({ topScore })
+        }
+        console.log("score: " + score + "\ntopScore: " + topScore);
+      }
 
     };
 
