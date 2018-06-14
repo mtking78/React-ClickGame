@@ -6,6 +6,7 @@ import cards from "./components/Card/cards.json";
 import Footer from "./components/Footer/Footer";
 import './App.css';
 
+let message = "Click a card to begin"
 let score = 0;
 let topScore = 0;
 
@@ -15,6 +16,7 @@ class App extends Component {
     state = {
       // this includes the cards.json array,
       cards,
+      message,
       score,
       topScore
     };
@@ -42,7 +44,7 @@ class App extends Component {
       // If you click the same card...
       if (clickedCard[0].clicked === true) {
 
-        alert("This card has already been clicked!\nTry again!");
+        message = "This card has already been clicked! - Try again!"
         // reset the score to 0,
         score = 0;
         this.setState({ score })
@@ -52,7 +54,7 @@ class App extends Component {
       // if you have clicked all 15 cards non-consecutively...
       } else if (this.state.score === 15) {
 
-        alert("You win!");
+        message = "You win!"
         // reset the score to 0,
         score = 0;
         this.setState({ score })
@@ -61,6 +63,7 @@ class App extends Component {
 
       } else {
 
+        message = "Keep clicking!"
         // change clicked value to true for clicked card,
         clickedCard[0].clicked = true;
         // shuffle cards after every click,
@@ -80,7 +83,7 @@ class App extends Component {
     render() {
       return (
         <div className="App">
-          <Navbar />
+          <Navbar message={message} score={score} topScore={topScore}/>
           <Container>
             {this.state.cards.map(card => (
               <Card
