@@ -52,14 +52,13 @@ class App extends Component {
         cards.forEach(this.resetCards)
 
       // if you have clicked all 15 cards non-consecutively...
-      } else if (this.state.score === 15) {
+      // } else if (score >= 14) {
 
-        message = "You win!"
-        // reset the score to 0,
-        score = 0;
-        this.setState({ score })
-        // reset all clicked values to `false`
-        cards.forEach(this.resetCards)
+      //   message = "You win!"
+      //   // reset the score to 0,
+      //   this.setState({ score })
+      //   // reset all clicked values to `false`
+      //   cards.forEach(this.resetCards)
 
       } else {
 
@@ -69,11 +68,21 @@ class App extends Component {
         // shuffle cards after every click,
         this.shuffleCards(cards)
         // update the score on every click
-        score ++;
+        // score ++;
+        const score = this.state.score + 1;
+        this.setState({ score: score });
 
         if (score > topScore) {
           topScore = score;
           this.setState({ topScore })
+        }
+        if (score === 15) {
+          message = "You win!"
+          // reset the score to 0,
+          const score = 0;
+          this.setState({ score })
+          // reset all clicked values to `false`
+          cards.forEach(this.resetCards)
         }
         console.log("score: " + score + "\ntopScore: " + topScore);
       }
@@ -83,7 +92,7 @@ class App extends Component {
     render() {
       return (
         <div className="App">
-          <Navbar message={message} score={score} topScore={topScore}/>
+          <Navbar message={message} score={this.state.score} topScore={this.state.topScore}/>
           <Container>
             {this.state.cards.map(card => (
               <Card
