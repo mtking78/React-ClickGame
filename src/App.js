@@ -46,7 +46,7 @@ class App extends Component {
 
         message = "This card has already been clicked! - Try again!"
         // reset the score to 0,
-        score = 0;
+        const score = 0;
         this.setState({ score })
         // reset all clicked values to `false`
         cards.forEach(this.resetCards)
