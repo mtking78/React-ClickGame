@@ -2,7 +2,7 @@
   "name": "react-clickgame",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mtking78.github.io/React-ClickGame/",
+  "homepage": "https://mtking78.github.io/React-ClickGame",
   "dependencies": {
     "gh-pages": "^1.2.0",
     "react": "^16.4.0",
